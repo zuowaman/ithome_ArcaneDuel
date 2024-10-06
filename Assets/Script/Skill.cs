@@ -50,4 +50,122 @@ public class Skill : MonoBehaviour
         }
     }
 
+    public class FlameImpact : ISkill
+    {
+        public string SkillName => "Flame Impact";
+        public int ManaCost => 12;
+        public int Cooldown => 3;
+        public int CurrentCooldown { get; set; } = 0;
+
+        public void UseSkill(Character target)
+        {
+            if (CurrentCooldown == 0)
+            {
+                int damage = 20;
+                target.TakeDamage(damage);
+                target.UseMana(ManaCost);
+                CurrentCooldown = Cooldown;
+                Debug.Log($"{SkillName} hits {target.Name} for {damage} fire damage.");
+            }
+            else
+            {
+                Debug.Log($"{SkillName} is on cooldown for {CurrentCooldown} more turns.");
+            }
+        }
+
+        public bool CanUseSkill(int currentMana)
+        {
+            return currentMana >= ManaCost && CurrentCooldown == 0;
+        }
+    }
+    public class HealingLight : ISkill
+    {
+        public string SkillName => "Healing Light";
+        public int ManaCost => 15;
+        public int Cooldown => 4;
+        public int CurrentCooldown { get; set; } = 0;
+
+        public void UseSkill(Character target)
+        {
+            if (CurrentCooldown == 0)
+            {
+                int healingAmount = 25;
+                target.Heal(healingAmount);
+                target.UseMana(ManaCost);
+                CurrentCooldown = Cooldown;
+                Debug.Log($"{SkillName} heals {target.Name} for {healingAmount} HP.");
+            }
+            else
+            {
+                Debug.Log($"{SkillName} is on cooldown for {CurrentCooldown} more turns.");
+            }
+        }
+
+        public bool CanUseSkill(int currentMana)
+        {
+            return currentMana >= ManaCost && CurrentCooldown == 0;
+        }
+    }
+    public class ThunderChain : ISkill
+    {
+        public string SkillName => "Thunder Chain";
+        public int ManaCost => 18;
+        public int Cooldown => 5;
+        public int CurrentCooldown { get; set; } = 0;
+
+        public void UseSkill(Character target)
+        {
+            if (CurrentCooldown == 0)
+            {
+                int primaryDamage = 15;
+                int secondaryDamage = 10;
+                target.TakeDamage(primaryDamage);
+                // 假設有其他敵人可以被擊中
+                // Implement secondary targets for the chain effect
+
+                target.UseMana(ManaCost);
+                CurrentCooldown = Cooldown;
+                Debug.Log($"{SkillName} strikes {target.Name} for {primaryDamage} lightning damage, and chains to others.");
+            }
+            else
+            {
+                Debug.Log($"{SkillName} is on cooldown for {CurrentCooldown} more turns.");
+            }
+        }
+
+        public bool CanUseSkill(int currentMana)
+        {
+            return currentMana >= ManaCost && CurrentCooldown == 0;
+        }
+    }
+    public class ShadowCurse : ISkill
+    {
+        public string SkillName => "Shadow Curse";
+        public int ManaCost => 14;
+        public int Cooldown => 3;
+        public int CurrentCooldown { get; set; } = 0;
+
+        public void UseSkill(Character target)
+        {
+            if (CurrentCooldown == 0)
+            {
+                int damage = 15;
+                target.TakeDamage(damage);
+                target.UseMana(ManaCost);
+                CurrentCooldown = Cooldown;
+                Debug.Log($"{SkillName} curses {target.Name}, dealing {damage} shadow damage and reducing their attack.");
+            }
+            else
+            {
+                Debug.Log($"{SkillName} is on cooldown for {CurrentCooldown} more turns.");
+            }
+        }
+
+        public bool CanUseSkill(int currentMana)
+        {
+            return currentMana >= ManaCost && CurrentCooldown == 0;
+        }
+    }
+
 }
+
